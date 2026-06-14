@@ -1,0 +1,4 @@
+# Copy this file to ".totp.yaml" next to the totp binary (or in your working
+# directory) and point keyFile at your keys JSON. Use an ABSOLUTE path so totp
+# works no matter which directory you launch it from.
+keyFile: "/absolute/path/to/keys.json"

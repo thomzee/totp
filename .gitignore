@@ -1,0 +1,15 @@
+# Secrets — never commit your real TOTP keys
+keys.json
+
+# Personal config (points at your local keyFile)
+.totp.yaml
+.tom.yaml
+
+# Compiled binaries
+/totp
+/totp.exe
+/tom
+*.exe
+
+# macOS
+.DS_Store
