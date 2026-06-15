@@ -79,7 +79,8 @@ func secondsRemaining() int {
 	return 30 - int(time.Now().Unix()%30)
 }
 
-func copyToClipboard(text string) error {
+// copyToClipboard is a package var so tests can stub it across platforms.
+var copyToClipboard = func(text string) error {
 	return exec.Command("bash", "-c", fmt.Sprintf("echo %s | tr -d '\n ' | pbcopy", text)).Run()
 }
 
@@ -269,23 +270,32 @@ func (m model) viewOTP() string {
 
 // ── main ──────────────────────────────────────────────────────────────────────
 
-func main() {
+// osExit is a package var so tests can observe main's exit code.
+var osExit = os.Exit
+
+// run wires up config, keys, and the TUI. opts lets tests inject input/output
+// (and production pass tea.WithAltScreen). It returns an error instead of
+// exiting so it can be unit tested.
+func run(opts ...tea.ProgramOption) error {
 	initConfig()
 
 	keys, err := loadKeys()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "error: %s\n", err)
-		os.Exit(1)
+		return err
 	}
 	if len(keys) == 0 {
-		fmt.Fprintln(os.Stderr, "no keys found in key file")
-		os.Exit(1)
+		return fmt.Errorf("no keys found in key file")
 	}
 
 	m := newModel(keys)
-	p := tea.NewProgram(m, tea.WithAltScreen())
-	if _, err := p.Run(); err != nil {
+	p := tea.NewProgram(m, opts...)
+	_, err = p.Run()
+	return err
+}
+
+func main() {
+	if err := run(tea.WithAltScreen()); err != nil {
 		fmt.Fprintf(os.Stderr, "error: %s\n", err)
-		os.Exit(1)
+		osExit(1)
 	}
 }
