@@ -1,5 +1,7 @@
 # totp
 
+[![test](https://github.com/thomzee/totp/actions/workflows/test.yml/badge.svg)](https://github.com/thomzee/totp/actions/workflows/test.yml)
+
 A fast, no-frills **TOTP authenticator for your terminal**. Pick an account from a
 fuzzy-searchable list, get the current 6‑digit code with a live countdown, and (on
 macOS) have it copied straight to your clipboard.
