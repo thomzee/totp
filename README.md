@@ -1,6 +1,7 @@
 # totp
 
 [![test](https://github.com/thomzee/totp/actions/workflows/test.yml/badge.svg)](https://github.com/thomzee/totp/actions/workflows/test.yml)
+[![codecov](https://codecov.io/github/thomzee/totp/graph/badge.svg?token=mo27c4g2cV)](https://codecov.io/github/thomzee/totp)
 
 A fast, no-frills **TOTP authenticator for your terminal**. Pick an account from a
 fuzzy-searchable list, get the current 6‑digit code with a live countdown, and (on
